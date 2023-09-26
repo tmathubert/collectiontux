@@ -14,6 +14,7 @@ class ClasseurTux
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+    private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'classeurTux', targetEntity: CarteTux::class)]
     private Collection $cartestux;
@@ -27,6 +28,10 @@ class ClasseurTux
     {
         return $this->id;
     }
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
 
     /**
      * @return Collection<int, CarteTux>
@@ -35,7 +40,10 @@ class ClasseurTux
     {
         return $this->cartestux;
     }
-
+    public function setName(string $name): void
+    {
+        $this->name=$name;
+    }
     public function addCartestux(CarteTux $cartestux): static
     {
         if (!$this->cartestux->contains($cartestux)) {
