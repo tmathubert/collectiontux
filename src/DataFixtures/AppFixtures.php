@@ -9,37 +9,41 @@ use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
-    private const ALL_TUX ='all-tux';
-    private const TIM_TUX = 'tim-tux';
     /**
      * Generates initialization data for classeur : [title]
      * @return \\Generator
      */
 
     private static function classeurDataGenerator() {
-        yield ["Toutes les cartes Tux",self::ALL_TUX];
-        yield ["Les cartes de Tim",self::TIM_TUX];
+        // ClasseurTux : name
+        yield ['Toutes les cartes Tux'];
+        yield ['Les cartes de Tim'];
+        yield ['Valou'];
     }
     private static function cartesGenerator() {
-        yield [self::ALL_TUX, "Switch"];
-        yield [self::ALL_TUX, "Routeur"];
-        yield [self::ALL_TUX, "Tux"];
-        yield [self::TIM_TUX, "Fibre"];
+        // CarteTux : type,desc,prix,classeurname
+        yield ["Matos","Switch",100,"Toutes les cartes Tux"];
+        yield ["Matos","Routeur",200,"Toutes les cartes Tux"];
+        yield ["Mascotte","Tux",1000,"Toutes les cartes Tux"];
+        yield ["Matos","Fibre",10,"Les cartes de Tim"];
     }
     public function load(ObjectManager $manager){
         $classeurRepo = $manager->getRepository(ClasseurTux::class);
-        foreach (self::classeurDataGenerator() as [$title,$classeurReference]) {
+        foreach (self::classeurDataGenerator() as [$name]) {
             $classeur = new ClasseurTux();
-            $classeur->setName($title);
+            $classeur->setName($name);
             $manager->persist($classeur);
-            $manager->flush();
+            //$this->addReference($name,$classeur);
         }
-        foreach (self::cartesGenerator() as [$classeurReference, $carteDesc]) {
-            $classeur = $this->getReference($classeurReference);
+        /*foreach (self::cartesGenerator() as [$type, $desc, $prix, $classeurname]) {
+            $classeur = $this->getReference($classeurname);
             $carte = new CarteTux();
-            $carte->setDescription($carteDesc);
-            $manager->persist($classeur);
-        }
+            $carte->setDescription($desc);
+            $carte->setType($type);
+            $carte->setPrix($prix);
+            //$manager->persist($carte);
+            //$manager->flush();
+        }*/
         $manager->flush();
     }
 }

@@ -14,7 +14,8 @@ class ClasseurTux
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    private ?string $name = null;
+    #[ORM\Column(length:255, nullable:true)]
+    private ?string $name = "";
 
     #[ORM\OneToMany(mappedBy: 'classeurTux', targetEntity: CarteTux::class)]
     private Collection $cartestux;
@@ -40,7 +41,7 @@ class ClasseurTux
     {
         return $this->cartestux;
     }
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name=$name;
     }
