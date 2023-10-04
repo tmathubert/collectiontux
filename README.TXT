@@ -10,12 +10,23 @@ Normalement, on peut acheter une carte TUX avec des points TUX : comme l'applica
 CarteTux [Objet] :
  - type : Local, Matos, Mascotte, Prez, ... (les types ne sont pas encore totalement déterminés)
  - desc : Description de la carte (on précise l'équipement, la personne par exemple)
- - prix : prix en points TUX
- - date : date d'obtention de la carte
+ - prix : Prix en points TUX
+ - date : Date d'obtention de la carte
+ - classeurtux : Le classeur dans lequel se trouve la carte (relation ManyToOne)
 
 ClasseurTux [Inventaire] :
  - name : Le nom du classeur
- - cartestux : La liste des cartes Tux du classeur
+ - cartestux : La liste des cartes Tux du classeur (relation OneToMany)
+ - membretux : L'utilisateur propriétaire du classeur (relation OneToOne)
+
+MembreTux [Membre] :
+ - role : Le rôle dans MiNET
+ - pseudo : Le nom d'utilisateur
+ - classeurtux : Le classeur de l'utilisateur (relation OneToOne)
+ - vitrinestux : Les vitrines du l'utilisateur (relation OneToMany)
 
 VitrineTux [Galerie] :
- - 
+ - name : Le nom de la vitrine
+ - ispublic : Booléen pour déterminer de l'état public ou non de la vitrine
+ - cartestux : La liste des cartes Tux du classeur (relation ManyToMany)
+ - membretux : Le propriétaire des vitrines (relation ManyToOne)

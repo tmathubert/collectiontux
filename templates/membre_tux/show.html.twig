@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MembreTux{% endblock %}
+
+{% block body %}
+    <h1>MembreTux</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ membre_tux.id }}</td>
+            </tr>
+            <tr>
+                <th>Role</th>
+                <td>{{ membre_tux.role }}</td>
+            </tr>
+            <tr>
+                <th>Pseudo</th>
+                <td>{{ membre_tux.pseudo }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_membre_tux_index') }}">back to list</a>
+
+    <a href="{{ path('app_membre_tux_edit', {'id': membre_tux.id}) }}">edit</a>
+
+    {{ include('membre_tux/_delete_form.html.twig') }}
+{% endblock %}

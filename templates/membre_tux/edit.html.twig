@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit MembreTux{% endblock %}
+
+{% block body %}
+    <h1>Edit MembreTux</h1>
+
+    {{ include('membre_tux/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_membre_tux_index') }}">back to list</a>
+
+    {{ include('membre_tux/_delete_form.html.twig') }}
+{% endblock %}

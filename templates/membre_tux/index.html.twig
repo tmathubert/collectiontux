@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MembreTux index{% endblock %}
+
+{% block body %}
+    <h1>MembreTux index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Role</th>
+                <th>Pseudo</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for membre_tux in membre_tuxes %}
+            <tr>
+                <td>{{ membre_tux.id }}</td>
+                <td>{{ membre_tux.role }}</td>
+                <td>{{ membre_tux.pseudo }}</td>
+                <td>
+                    <a href="{{ path('app_membre_tux_show', {'id': membre_tux.id}) }}">show</a>
+                    <a href="{{ path('app_membre_tux_edit', {'id': membre_tux.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_membre_tux_new') }}">Create new</a>
+{% endblock %}

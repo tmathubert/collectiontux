@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New MembreTux{% endblock %}
+
+{% block body %}
+    <h1>Create new MembreTux</h1>
+
+    {{ include('membre_tux/_form.html.twig') }}
+
+    <a href="{{ path('app_membre_tux_index') }}">back to list</a>
+{% endblock %}

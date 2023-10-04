@@ -19,6 +19,9 @@ class ClasseurTux
 
     #[ORM\OneToMany(mappedBy: 'classeurTux', targetEntity: CarteTux::class)]
     private Collection $cartestux;
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?MembreTux $membreTux = null;
+
 
     public function __construct()
     {
@@ -65,5 +68,13 @@ class ClasseurTux
         }
 
         return $this;
+    }
+    public function getMembretux(): MembreTux
+    {
+        return $this->membreTux;
+    }
+    public function setMembreTux(MembreTux $membre): void
+    {
+        $this->membreTux=$membre;
     }
 }

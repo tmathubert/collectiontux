@@ -26,7 +26,6 @@ class MembreTux
 
     #[ORM\OneToMany(mappedBy: 'membretux', targetEntity: VitrineTux::class, orphanRemoval: true)]
     private Collection $vitrinesTux;
-
     public function __construct()
     {
         $this->vitrinesTux = new ArrayCollection();

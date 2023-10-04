@@ -16,7 +16,7 @@ class VitrineTux
     private ?int $id = null;
 
     #[ORM\ManyToMany(targetEntity: CarteTux::class)]
-    private Collection $VitrineTux;
+    private Collection $cartesTux;
 
     #[ORM\ManyToOne(inversedBy: 'vitrinesTux')]
     #[ORM\JoinColumn(nullable: false)]
@@ -25,9 +25,12 @@ class VitrineTux
     #[ORM\Column]
     private ?bool $ispublic = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
+
     public function __construct()
     {
-        $this->VitrineTux = new ArrayCollection();
+        $this->cartesTux = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -38,23 +41,23 @@ class VitrineTux
     /**
      * @return Collection<int, CarteTux>
      */
-    public function getVitrineTux(): Collection
+    public function getCartesTux(): Collection
     {
-        return $this->VitrineTux;
+        return $this->cartesTux;
     }
 
-    public function addVitrineTux(CarteTux $vitrineTux): static
+    public function addCartesTux(CarteTux $vitrineTux): static
     {
-        if (!$this->VitrineTux->contains($vitrineTux)) {
-            $this->VitrineTux->add($vitrineTux);
+        if (!$this->cartesTux->contains($vitrineTux)) {
+            $this->cartesTux->add($vitrineTux);
         }
 
         return $this;
     }
 
-    public function removeVitrineTux(CarteTux $vitrineTux): static
+    public function removeCartesTux(CarteTux $vitrineTux): static
     {
-        $this->VitrineTux->removeElement($vitrineTux);
+        $this->cartesTux->removeElement($vitrineTux);
 
         return $this;
     }
@@ -79,6 +82,18 @@ class VitrineTux
     public function setIspublic(bool $ispublic): static
     {
         $this->ispublic = $ispublic;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
 
         return $this;
     }
