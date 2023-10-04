@@ -7,6 +7,8 @@ use App\Entity\ClasseurTux;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
+use function Symfony\Component\Clock\now;
+
 class AppFixtures extends Fixture
 {
     /**
@@ -33,17 +35,20 @@ class AppFixtures extends Fixture
             $classeur = new ClasseurTux();
             $classeur->setName($name);
             $manager->persist($classeur);
-            //$this->addReference($name,$classeur);
+            $this->addReference($name,$classeur);
         }
-        /*foreach (self::cartesGenerator() as [$type, $desc, $prix, $classeurname]) {
+        foreach (self::cartesGenerator() as [$type, $desc, $prix, $classeurname]) {
             $classeur = $this->getReference($classeurname);
             $carte = new CarteTux();
             $carte->setDescription($desc);
             $carte->setType($type);
             $carte->setPrix($prix);
-            //$manager->persist($carte);
-            //$manager->flush();
-        }*/
+            $carte->setDate(now());
+            $classeur->addCartestux($carte);
+            $manager->persist($classeur);
+            $manager->persist($carte);
+            $manager->flush();
+        }
         $manager->flush();
     }
 }
