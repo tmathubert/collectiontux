@@ -2,14 +2,14 @@ Projet dev web Symfony - CSC4101
 
 Application web de collection de cartes TUX
 
-On peut gagner des points et des cartes TUX en faisant de bonnes choses à MiNET !
+On peut gagner des points et des cartes TUX en faisant de bonnes choses à MiNET et en poussant toujours plus ses projets !
 Cette application permet de montrer les cartes TUX qu'on a !
 
-Normalement, on peut acheter une carte TUX avec des points TUX : comme l'application ne gèrera pas les points, on affichera seulement le prix des cartes !
+Normalement, on peut acheter des cartes TUX avec des points TUX : comme l'application ne gèrera pas les points, on affichera seulement le prix des cartes !
 
 CarteTux [Objet] :
- - type : Local, Matos, Mascotte, Prez, ... (les types ne sont pas encore totalement déterminés)
- - desc : Description de la carte (on précise l'équipement, la personne par exemple)
+ - type : Local, Niveau 1/2/3, Mascotte, Prez, ... (les types ne sont pas encore totalement déterminés)
+ - desc : Description de la carte (on précise l'équipement ou la personne par exemple)
  - prix : Prix en points TUX
  - date : Date d'obtention de la carte
  - classeurtux : Le classeur dans lequel se trouve la carte (relation ManyToOne)

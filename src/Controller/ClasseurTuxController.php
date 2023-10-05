@@ -10,6 +10,7 @@ use Doctrine\Persistence\ManagerRegistry;
 #[Route('/classeur')]
 class ClasseurTuxController extends AbstractController
 {
+    // Cette partie commentée sera réimplémentée lorsque les twigs seront prêts !
     /*#[Route('/', name: 'app_classeur_tux', methods: ['GET'])]
     public function index(): Response
     {
@@ -18,7 +19,7 @@ class ClasseurTuxController extends AbstractController
         ]);
     }*/
 
-    //Affichage de la liste des classeurs
+    // Affichage de la liste des classeurs (avec url attaché pour les consulter)
     #[Route('/', name: 'classeurtux', methods: ['GET'])]
     #[Route('/list', name: 'classeurtux_list', methods: ['GET'])]
     #[Route('/index', name: 'classeurtux_index', methods: ['GET'])]
@@ -54,10 +55,11 @@ class ClasseurTuxController extends AbstractController
             array('content-type' => 'text/html')
             );
     }
-    // Affichage du contenu d'un classeur (nom, propriétaire, contenu)
+    // Affichage des détails d'un classeur (nom, propriétaire, contenu)
     #[Route('/{id}', name: 'classeurtux_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function showAction(ClasseurTux $classeur): Response
     {
+        $backurl = $this->generateUrl('classeurtux');
         $htmlpage = '<!DOCTYPE html>
 <html>
     <head>
@@ -65,6 +67,7 @@ class ClasseurTuxController extends AbstractController
         <title>Classeur n° '.$classeur->getId().' details</title>
     </head>
     <body>
+        <a href="'.$backurl.'">Retour à la liste des classeurs</a>
         <h2>Détails du classeur :</h2>
         <ul>
         <dl>';
