@@ -20,6 +20,7 @@ class ClasseurTux
     #[ORM\OneToMany(mappedBy: 'classeurTux', targetEntity: CarteTux::class)]
     private Collection $cartestux;
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: true)]
     private ?MembreTux $membreTux = null;
 
 
@@ -69,12 +70,16 @@ class ClasseurTux
 
         return $this;
     }
-    public function getMembretux(): MembreTux
+    public function getMembretux(): ?MembreTux
     {
         return $this->membreTux;
     }
-    public function setMembreTux(MembreTux $membre): void
+    public function setMembreTux(?MembreTux $membre): void
     {
         $this->membreTux=$membre;
+    }
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }

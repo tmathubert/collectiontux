@@ -84,7 +84,7 @@ class ClasseurTuxController extends AbstractController
             <li>Type : '. $carte->getType() .'</li>
             <li>Description : '. $carte->getDescription() .'</li>
             <li>Prix : '.$carte->getPrix().'</li>
-            <li>Date obtention : '. $carte->getDate()->format('Y-m-d H:i:s').'</li>';
+            <li>Date obtention : '. $carte->getDate()->format('d/m/Y H:m').'</li>';
         }
         $htmlpage .= '</dl>';
         $htmlpage .= '</ul></body></html>';

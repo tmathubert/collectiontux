@@ -30,3 +30,17 @@ VitrineTux [Galerie] :
  - ispublic : Booléen pour déterminer de l'état public ou non de la vitrine
  - cartestux : La liste des cartes Tux du classeur (relation ManyToMany)
  - membretux : Le propriétaire des vitrines (relation ManyToOne)
+
+Les pages qui sont up :
+/classeur | /classeur/list | /classeur/index
+ -> Affiche la liste des classeurs
+/classeur/[id_classeur]
+ -> Affiche les détails d'un classeur
+/membre
+ -> Affiche la liste des membres et permet d'en créer de nouveaux et d'éditer les existants
+/admin
+ -> Tous les CrudController, qui sont fonctionnels
+/vitrine
+ -> Controller créé mais pas édité
+/carte
+ -> Controller créé mais pas édité
