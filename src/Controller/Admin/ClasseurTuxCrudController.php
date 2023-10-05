@@ -24,7 +24,6 @@ class ClasseurTuxCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             TextField::new('name'),
             AssociationField::new('cartestux'),
-            AssociationField::new('membreTux'),
         ];
     }
     public function configureActions(Actions $actions): Actions
