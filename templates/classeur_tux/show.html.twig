@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Classeur n°{{ classeur.id }} - TUX{% endblock %}
+
+{% block body %}
+      <h1>Classeur n°{{classeur.id}}</h1>
+
+      {# % dump classeur % #}
+
+      <table class="table">
+          <tbody>
+              <tr>
+                  <th>Nom du classeur :</th>
+                  <td>{{ classeur.name }}</td>
+              </tr>
+              <tr>
+                <th>Propriétaire :</th>
+                <td>{{ classeur.membreTux }}</td>
+              </tr>
+              <tr>
+                <a href="{{ path('classeurtux') }}">Retour à la liste des classeurs</a>
+              </tr>
+              <tr>
+                  <th>Cartes du classeur</th>
+                  <td>
+                  <ul>
+                  {%  for carte in classeur.cartestux %}
+                  <li>
+                    <a href="{{ path('cartetuxshow', {'id': carte.id}) }}">{{ carte }}</a>                  
+                  </li>
+                  {% endfor %} {# [inventaire].[objets] #}
+                  {% if classeur.cartestux.isEmpty() %}
+                    <h2>Ce classeur ne contient aucune carte. :(</h2>
+                  {% endif %}
+                  </ul> 
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+{% endblock %}

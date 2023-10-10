@@ -1,4 +1,4 @@
-Projet dev web Symfony - CSC4101
+Projet dev web Symfony - CSC4101 - Timothée Mathubert
 
 Application web de collection de cartes TUX
 

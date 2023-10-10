@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Classeurs Tux{% endblock %}
+
+{% block body %}
+      <h1>Liste des Classeurs Tux</h1>
+
+      {# % dump classeur % #}
+      <ul>
+        {% for classeur in classeurs %}
+        <li>
+          <a href="{{ path('classeurtux_show',{'id':classeur.id}) }}">{{ classeur.name }}
+        </li>
+        {% endfor %}
+      </ul>
+{% endblock %}

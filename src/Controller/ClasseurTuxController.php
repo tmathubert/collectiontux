@@ -11,13 +11,13 @@ use Doctrine\Persistence\ManagerRegistry;
 class ClasseurTuxController extends AbstractController
 {
     // Cette partie commentée sera réimplémentée lorsque les twigs seront prêts !
-    /*#[Route('/', name: 'app_classeur_tux', methods: ['GET'])]
-    public function index(): Response
+    #[Route('/test', name: 'app_classeur_tux', methods: ['GET'])]
+    public function indexAction(): Response
     {
         return $this->render('classeur_tux/index.html.twig', [
             'controller_name' => 'ClasseurTuxController',
         ]);
-    }*/
+    }
 
     // Affichage de la liste des classeurs (avec url attaché pour les consulter)
     #[Route('/', name: 'classeurtux', methods: ['GET'])]
@@ -25,7 +25,15 @@ class ClasseurTuxController extends AbstractController
     #[Route('/index', name: 'classeurtux_index', methods: ['GET'])]
     public function listAction(ManagerRegistry $doctrine)
     {
-        $htmlpage = '<!DOCTYPE html>
+        $entityManager=$doctrine->getManager();
+        $classeurs = $entityManager->getRepository(ClasseurTux::class)->findAll();
+        return $this->render('classeur_tux/list.html.twig', [
+            'controller_name' => 'ClasseurTuxController',
+            'classeurs' => $classeurs,
+        ]);
+        // ANCIEN : concaténation de chaines de caractères
+
+        /*$htmlpage = '<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -53,13 +61,21 @@ class ClasseurTuxController extends AbstractController
             $htmlpage,
             Response::HTTP_OK,
             array('content-type' => 'text/html')
-            );
+            );*/
+        
     }
     // Affichage des détails d'un classeur (nom, propriétaire, contenu)
     #[Route('/{id}', name: 'classeurtux_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function showAction(ClasseurTux $classeur): Response
     {
-        $backurl = $this->generateUrl('classeurtux');
+        return $this->render('classeur_tux/show.html.twig', [
+            'controller_name' => 'ClasseurTuxController',
+            'classeur' => $classeur,
+        ]);
+
+        // ANCIEN : concaténation de chaines de caractères
+
+        /*$backurl = $this->generateUrl('classeurtux');
         $htmlpage = '<!DOCTYPE html>
 <html>
     <head>
@@ -93,6 +109,6 @@ class ClasseurTuxController extends AbstractController
                 $htmlpage,
                 Response::HTTP_OK,
                 array('content-type' => 'text/html')
-                );
+                );*/
     }
 }

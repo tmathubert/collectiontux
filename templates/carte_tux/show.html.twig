@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Carte {{ carte.description }}{% endblock %}
+
+{% block body %}
+    <h1>Carte {{ carte.description }}</h1>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>ID :</th>
+                <td>{{ carte.id }}</td>
+              </tr>
+            <tr>
+                <th>Type :</th>
+                <td>{{ carte.type }}</td>
+            </tr>
+            <tr>
+                <th>Prix :</th>
+                <td>{{ carte.prix }}</td>
+            </tr>
+            <tr>
+              <a href="{{ path('classeurtux') }}">Retour à la liste des classeurs</a>
+            </tr>
+        </tbody>
+    </table>
+
+
+{% endblock %}
