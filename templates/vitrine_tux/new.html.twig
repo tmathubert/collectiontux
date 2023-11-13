@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New VitrineTux{% endblock %}
+
+{% block body %}
+    <h1>Create new VitrineTux</h1>
+
+    {{ include('vitrine_tux/_form.html.twig') }}
+
+    <a href="{{ path('app_vitrine_tux_index') }}">back to list</a>
+{% endblock %}

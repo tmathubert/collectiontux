@@ -3,12 +3,17 @@
 {% block title %}Liste des Classeurs Tux{% endblock %}
 
 {% block body %}
-      <h1>Liste des Classeurs Tux</h1>
       <ul>
+      <div class="position-relative">
         {% for classeur in classeurs %}
-        <li>
-          <a href="{{ path('classeurtux_show',{'id':classeur.id}) }}">{{ classeur.name }}
-        </li>
+        <div class="card w-25 mb-3 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+          <div class="card-body">
+            <h5 class="card-title">{{ classeur.name }}</h5>
+            <p class="card-text">Classeur de {{ classeur.membreTux }}</p>
+            <a href="{{ path('classeurtux_show',{'id':classeur.id}) }}" class="btn btn-primary">Détails</a>
+          </div>
+        </div>        
         {% endfor %}
+      </div>
       </ul>
 {% endblock %}

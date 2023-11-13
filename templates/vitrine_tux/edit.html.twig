@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit VitrineTux{% endblock %}
+
+{% block body %}
+    <h1>Edit VitrineTux</h1>
+
+    {{ include('vitrine_tux/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_vitrine_tux_index') }}">back to list</a>
+
+    {{ include('vitrine_tux/_delete_form.html.twig') }}
+{% endblock %}

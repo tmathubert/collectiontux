@@ -2,6 +2,18 @@ bootstrap_menu:
   menus:
     main:
       items:
-        todos:
-          label: 'Tasks'
+        home:
+          label: 'Accueil'
           route: 'classeurtux'
+        vitrines:
+          label: 'Vitrines'
+          route: 'app_vitrine_tux_index'
+        account:
+          label: 'Mon Compte'
+          items:
+            changer_mdp:
+              label: 'Changer mon mot de passe'
+            deco:
+              label: 'Me déconnecter'
+        infos:
+          label: 'À propos'
