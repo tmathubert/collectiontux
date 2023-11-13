@@ -55,7 +55,6 @@ class ClasseurTux
             $this->cartestux->add($cartestux);
             $cartestux->setClasseurTux($this);
         }
-
         return $this;
     }
 
@@ -63,7 +62,7 @@ class ClasseurTux
     {
         if ($this->cartestux->removeElement($cartestux)) {
             // set the owning side to null (unless already changed)
-            if ($cartestux->getClasseurTux() === $this) {
+            if ($cartestux->getClasseurTux() == $this) {
                 $cartestux->setClasseurTux(null);
             }
         }

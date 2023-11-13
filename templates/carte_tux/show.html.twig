@@ -19,7 +19,7 @@
                 <td>{{ carte.prix }}</td>
             </tr>
             <tr>
-              <a href="{{ path('classeurtux') }}">Retour à la liste des classeurs</a>
+                <a href="{{ path('classeurtux_show', {'id': carte.classeurtux.id}) }}">Retour au classeur {{ carte.classeurtux.name }}</a>
             </tr>
         </tbody>
     </table>
