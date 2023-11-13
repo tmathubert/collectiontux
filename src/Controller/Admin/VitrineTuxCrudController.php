@@ -5,8 +5,8 @@ namespace App\Controller\Admin;
 use App\Entity\VitrineTux;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
-use EasyCorp\Bundle\EasyAdminBundle\Config\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
@@ -32,7 +32,7 @@ class VitrineTuxCrudController extends AbstractCrudController
                 ->hideWhenCreating(),
             TextField::new('name'),
 
-            AssociationField::new('cartestux')
+            AssociationField::new('cartesTux')
                 ->onlyOnForms()
                 // on ne souhaite pas gérer l'association entre les
                 // [objets] et la [galerie] dès la crétion de la
@@ -46,11 +46,11 @@ class VitrineTuxCrudController extends AbstractCrudController
                     function (QueryBuilder $queryBuilder) {
                         // récupération de l'instance courante de [galerie]
                         $currentVitrine = $this->getContext()->getEntity()->getInstance();
-                        $owner = $currentVitrine->get();
+                        $owner = $currentVitrine->getMembretux();
                         $memberId = $owner->getId();
                         // charge les seuls [objets] dont le 'owner' de l'[inventaire] est le [createur] de la galerie
-                        $queryBuilder->leftJoin('entity.classeurtux', 'i')
-                            ->leftJoin('i.owner', 'm')
+                        $queryBuilder->leftJoin('entity.classeurTux', 'i')
+                            ->leftJoin('i.membreTux', 'm')
                             ->andWhere('m.id = :member_id')
                             ->setParameter('member_id', $memberId);    
                         return $queryBuilder;
