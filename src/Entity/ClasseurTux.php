@@ -19,9 +19,10 @@ class ClasseurTux
 
     #[ORM\OneToMany(mappedBy: 'classeurTux', targetEntity: CarteTux::class)]
     private Collection $cartestux;
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: true)]
+
+    #[ORM\ManyToOne(inversedBy: 'classeursTux')]
     private ?MembreTux $membreTux = null;
+   
 
 
     public function __construct()

@@ -26,7 +26,7 @@ class MembreTuxCrudController extends AbstractCrudController
             TextField::new('role'),
             TextField::new('pseudo'),
             AssociationField::new('vitrinesTux'),
-            AssociationField::new('classeurtux'),
+            AssociationField::new('classeursTux'),
         ];
     }
     public function configureActions(Actions $actions): Actions

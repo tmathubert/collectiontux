@@ -25,8 +25,7 @@ class ClasseurTuxCrudController extends AbstractCrudController
             TextField::new('name'),
             AssociationField::new('cartestux')
                 ->onlyOnDetail()
-                ->setTemplatePath('admin/fields/classeurtux_cartestux.html.twig')
-
+                ->setTemplatePath('admin/fields/classeurtux_cartestux.html.twig'),
         ];
     }
     public function configureActions(Actions $actions): Actions

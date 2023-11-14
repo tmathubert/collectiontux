@@ -2,18 +2,39 @@ bootstrap_menu:
   menus:
     main:
       items:
-        home:
-          label: 'Accueil'
-          route: 'classeurtux'
         vitrines:
           label: 'Vitrines'
           route: 'app_vitrine_tux_index'
-        account:
-          label: 'Mon Compte'
+        admin:
+          label: 'Admininstration'
           items:
-            changer_mdp:
-              label: 'Changer mon mot de passe'
-            deco:
-              label: 'Me déconnecter'
-        infos:
-          label: 'À propos'
+            easyadmin:
+              is_divider: true
+              label: EasyAdmin
+            pannel:
+              label: 'Pannel'
+              route: 'admin'
+            consult:
+              is_divider: true
+              label: Liste des entités
+            membre:
+              label: 'Membres'
+              route: 'app_membre_tux_index'
+            classeur:
+              label: 'Classeurs'
+              route: 'app_classeur_tux_index'
+    anonymousaccount:
+      items:
+        login:
+          label: 'Login'
+          route: 'app_login'
+        register:
+          label: 'Register'
+          route: 'app_register'
+    account:
+      items:
+        logout:
+          label: 'Logout'
+          route: 'app_logout'
+          roles: [ 'ROLE_USER' ]
+    

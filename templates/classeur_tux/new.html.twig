@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ClasseurTux{% endblock %}
+
+{% block main %}
+    <h1>Create new ClasseurTux</h1>
+
+    {{ include('classeur_tux/_form.html.twig') }}
+
+    <a href="{{ path('app_classeur_tux_index') }}">back to list</a>
+{% endblock %}

@@ -7,8 +7,8 @@ use App\Entity\ClasseurTux;
 use App\Entity\MembreTux;
 use App\Entity\VitrineTux;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ObjectManager;
-
 use function Symfony\Component\Clock\now;
 
 class AppFixtures extends Fixture
@@ -79,7 +79,9 @@ class AppFixtures extends Fixture
         // Association d'un classeur au membre (OneToOne)
             if ($classeurname != null) {
                 $classeur = $this->getReference($classeurname);
-                $membre->setClasseurtux($classeur);
+                $classeurs = new ArrayCollection();
+                $classeurs->add($classeur);
+                $membre->setClasseurstux($classeurs);
                 $classeur->setMembreTux($membre);
             }
         // Création d'une référence pour chaque membre par leur pseudo

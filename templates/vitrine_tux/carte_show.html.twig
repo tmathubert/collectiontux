@@ -1,8 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Carte {{ carte.description }}{% endblock %}
+{% block title %}VitrineTux{% endblock %}
 
 {% block main %}
+    <h1>VitrineTux {{vitrine.name}} </h1>
+
     <h1>Carte {{ carte.description }}</h1>
     <table class="table">
         <tbody>
@@ -19,10 +21,8 @@
                 <td>{{ carte.prix }}</td>
             </tr>
             <tr>
-                <a href="{{ path('app_classeur_tux_show', {'id': carte.classeurtux.id}) }}">Retour au classeur {{ carte.classeurtux.name }}</a>
+                <a href="{{ path('app_vitrine_tux_show', { 'id': vitrine.id}) }}">back to VitrineTux</a>
             </tr>
         </tbody>
     </table>
-
-
 {% endblock %}

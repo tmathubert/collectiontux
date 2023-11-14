@@ -2,39 +2,30 @@
 
 {% block title %}Classeur n°{{ classeur.id }} - TUX{% endblock %}
 
-{% block body %}
-      <h1>Classeur n°{{classeur.id}}</h1>
-
+{% block main %}
+      <div class="card shadow p-3 mb-5 bg-body-tertiary rounded mx-auto p-2 bg-light" style="width: 50rem;">
+        <img src='https://images.emojiterra.com/google/noto-emoji/unicode-15/color/512px/1f4da.png' class="mx-auto p-2" alt="classeur" width="100" height="100">
+        <div class="card-body">
+          <h5 class="card-title text-center">Classeur de {{classeur.membreTux}}</h5>
+          
+          <div class="card mx-auto p-2">
+            <div class="card-body mx-auto p-2 mt-3 mb-3">
+              {% if classeur.cartestux.isEmpty() %}
+              <p class="card-text text-center">Vous n'avez aucune carte.</p>
+              {% endif %}
+            {%  for carte in classeur.cartestux %}
+            <a href="{{ path('app_carte_tux_show', {'id': carte.id}) }}" class="btn btn-success mx-auto p-2">
+              <img src="https://i.ibb.co/wQjdNG4/cartetux.png" class="mx-auto p-2" alt="carte" />
+              <br>
+              <p class="text-center"><h5>{{ carte }}</h5></p>
+            </a>
+            {% endfor %} {# [inventaire].[objets] #}
+            </div>
+          </div>
+        </div>
+        <a href="{{ path('app_carte_tux_new', {'id': classeur.id}) }}" class="btn btn-success mb-2">Ajouter une carte</a>
+        <a href="{{ path('app_classeur_tux_edit',{'id':classeur.id})}}" class="btn btn-danger mb-2">Éditer</a>
+        <a href="{{ path('app_classeur_tux_index')}}" class="btn btn-primary">Retour</a>
+      </div>
       {# % dump classeur % #}
-
-      <table class="table">
-          <tbody>
-              <tr>
-                  <th>Nom du classeur :</th>
-                  <td>{{ classeur.name }}</td>
-              </tr>
-              <tr>
-                <th>Propriétaire :</th>
-                <td>{{ classeur.membreTux }}</td>
-              </tr>
-              <tr>
-                <a href="{{ path('classeurtux') }}">Retour à la liste des classeurs</a>
-              </tr>
-              <tr>
-                  <th>Cartes du classeur</th>
-                  <td>
-                  <ul>
-                  {%  for carte in classeur.cartestux %}
-                  <li>
-                    <a href="{{ path('cartetuxshow', {'id': carte.id}) }}">{{ carte }}</a>                  
-                  </li>
-                  {% endfor %} {# [inventaire].[objets] #}
-                  {% if classeur.cartestux.isEmpty() %}
-                    <h2>Ce classeur ne contient aucune carte. :(</h2>
-                  {% endif %}
-                  </ul> 
-                  </td>
-              </tr>
-          </tbody>
-      </table>
 {% endblock %}

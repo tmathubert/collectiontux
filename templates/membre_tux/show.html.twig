@@ -2,7 +2,7 @@
 
 {% block title %}MembreTux{% endblock %}
 
-{% block body %}
+{% block main %}
     <h1>MembreTux</h1>
 
     <table class="table">
@@ -19,12 +19,16 @@
                 <th>Pseudo</th>
                 <td>{{ membre_tux.pseudo }}</td>
             </tr>
+            <tr>
+                <th>Classeurs</th>
+                {% for classeur in membre_tux.classeurstux %}
+                    <td><a href="{{ path('app_classeur_tux_show', {'id' : classeur.id}) }}">{{ classeur }}</a></td>
+                {% endfor %}
+            </tr>
+
         </tbody>
     </table>
-
+    <a href="{{ path('app_classeur_tux_new', {'id': membre_tux.id}) }}">add new ClasseurTux</a><br>
+    <a href="{{ path('app_vitrine_tux_new', {'id': membre_tux.id}) }}">add new VitrineTux</a><br>
     <a href="{{ path('app_membre_tux_index') }}">back to list</a>
-
-    <a href="{{ path('app_membre_tux_edit', {'id': membre_tux.id}) }}">edit</a>
-
-    {{ include('membre_tux/_delete_form.html.twig') }}
 {% endblock %}

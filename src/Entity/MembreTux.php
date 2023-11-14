@@ -15,9 +15,6 @@ class MembreTux
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?ClasseurTux $classeurtux = null;
-
     #[ORM\Column(length: 255)]
     private ?string $role = null;
 
@@ -26,9 +23,13 @@ class MembreTux
 
     #[ORM\OneToMany(mappedBy: 'membretux', targetEntity: VitrineTux::class, orphanRemoval: true)]
     private Collection $vitrinesTux;
+
+    #[ORM\OneToMany(mappedBy: 'membreTux', targetEntity: ClasseurTux::class)]
+    private Collection $classeursTux;
     public function __construct()
     {
         $this->vitrinesTux = new ArrayCollection();
+        $this->classeursTux = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -36,17 +37,37 @@ class MembreTux
         return $this->id;
     }
 
-    public function getClasseurtux(): ?ClasseurTux
+    public function getClasseurstux(): Collection
     {
-        return $this->classeurtux;
+        return $this->classeursTux;
     }
 
-    public function setClasseurtux(?ClasseurTux $classeurtux): static
+    public function setClasseurstux(Collection $classeurstux): static
     {
-        $this->classeurtux = $classeurtux;
+        $this->classeursTux = $classeurstux;
 
         return $this;
     }
+    public function addClasseursTux(ClasseurTux $classeurTux): static
+    {
+        if (!$this->classeursTux->contains($classeurTux)) {
+            $this->classeursTux->add($classeurTux);
+            $classeurTux->setMembretux($this);
+        }
+        return $this;
+    }
+    public function removeClasseursTux(ClasseurTux $classeurTux): static
+    {
+        if ($this->classeursTux->removeElement($classeurTux)) {
+            // set the owning side to null (unless already changed)
+            if ($classeurTux->getMembretux() === $this) {
+                $classeurTux->setMembretux(null);
+            }
+        }
+
+        return $this;
+    }
+
 
     public function getRole(): ?string
     {

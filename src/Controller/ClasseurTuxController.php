@@ -2,32 +2,84 @@
 
 namespace App\Controller;
 
+use App\Entity\MembreTux;
 use App\Entity\ClasseurTux;
+use App\Form\ClasseurTuxType;
+use App\Repository\ClasseurTuxRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Persistence\ManagerRegistry;
+
 #[Route('/classeur')]
 class ClasseurTuxController extends AbstractController
 {
     // Affichage de la liste des classeurs (avec url attaché pour les consulter)
-    #[Route('/', name: 'classeurtux', methods: ['GET'])]
-    #[Route('/list', name: 'classeurtux_list', methods: ['GET'])]
-    #[Route('/index', name: 'classeurtux_index', methods: ['GET'])]
+    #[Route('/', name: 'app_classeur_tux_index', methods: ['GET'])]
     public function listAction(ManagerRegistry $doctrine)
     {
         $entityManager=$doctrine->getManager();
         $classeurs = $entityManager->getRepository(ClasseurTux::class)->findAll();
-        return $this->render('classeur_tux/list.html.twig', [
+        return $this->render('classeur_tux/index.html.twig', [
             'classeurs' => $classeurs,
         ]);
     }
     // Affichage des détails d'un classeur (nom, propriétaire, contenu)
-    #[Route('/{id}', name: 'classeurtux_show', requirements: ['id' => '\d+'], methods: ['GET'])]
+    #[Route('/{id}', name: 'app_classeur_tux_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function showAction(ClasseurTux $classeur): Response
     {
         return $this->render('classeur_tux/show.html.twig', [
             'classeur' => $classeur,
         ]);
+    }
+    #[Route('/new/{id}', name: 'app_classeur_tux_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, ClasseurTuxRepository $classeurRepository, MembreTux $member,EntityManagerInterface $entityManager): Response
+    {
+            $classeur = new ClasseurTux();
+            $classeur->setMembreTux($member);
+            $form = $this->createForm(ClasseurTuxType::class, $classeur);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($classeur);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_classeur_tux_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('classeur_tux/new.html.twig', [
+            'classeur_tux' => $classeur,
+            'form' => $form,
+        ]);
+    }
+    #[Route('/{id}/edit', name: 'app_classeur_tux_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, ClasseurTux $classeurTux, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(ClasseurTuxType::class, $classeurTux);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_classeur_tux_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('classeur_tux/edit.html.twig', [
+            'classeur_tux' => $classeurTux,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_classeur_tux_delete', methods: ['POST'])]
+    public function delete(Request $request, ClasseurTux $classeurTux, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$classeurTux->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($classeurTux);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_classeur_tux_index', [], Response::HTTP_SEE_OTHER);
     }
 }
