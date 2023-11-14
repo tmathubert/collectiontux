@@ -16,9 +16,6 @@ class MembreTux
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $role = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $pseudo = null;
 
     #[ORM\OneToMany(mappedBy: 'membretux', targetEntity: VitrineTux::class, orphanRemoval: true)]
@@ -26,6 +23,9 @@ class MembreTux
 
     #[ORM\OneToMany(mappedBy: 'membreTux', targetEntity: ClasseurTux::class)]
     private Collection $classeursTux;
+
+    #[ORM\OneToOne(mappedBy: 'membreTux', cascade: ['persist', 'remove'])]
+    private ?User $user = null;
     public function __construct()
     {
         $this->vitrinesTux = new ArrayCollection();
@@ -64,19 +64,6 @@ class MembreTux
                 $classeurTux->setMembretux(null);
             }
         }
-
-        return $this;
-    }
-
-
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
-
-    public function setRole(string $role): static
-    {
-        $this->role = $role;
 
         return $this;
     }
@@ -125,5 +112,22 @@ class MembreTux
     public function __toString(): string
     {
         return $this->pseudo;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): static
+    {
+        // set the owning side of the relation if necessary
+        if ($user->getMembreTux() !== $this) {
+            $user->setMembreTux($this);
+        }
+
+        $this->user = $user;
+
+        return $this;
     }
 }

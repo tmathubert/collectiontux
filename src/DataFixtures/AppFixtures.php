@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\CarteTux;
+use App\Entity\User;
 use App\Entity\ClasseurTux;
 use App\Entity\MembreTux;
 use App\Entity\VitrineTux;
@@ -10,9 +11,16 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ObjectManager;
 use function Symfony\Component\Clock\now;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class AppFixtures extends Fixture
+class AppFixtures extends Fixture implements DependentFixtureInterface
 {
+    public function getDependencies()
+    {
+        return [
+            UserFixtures::class,
+        ];
+    }
     /**
      * Generates initialization data for ClasseurTux,CarteTux and MembreTux
      * @return \\Generator
@@ -23,6 +31,7 @@ class AppFixtures extends Fixture
         yield ['nicowano'];
         yield ['fedoraaa'];
         yield ['goat'];
+        yield ['zezezeroooo'];
     }
     private static function cartesGenerator() {
         // CarteTux : type,desc,prix,classeurname
@@ -32,12 +41,12 @@ class AppFixtures extends Fixture
         yield ["Niveau 1","Fibre",10,"Les cartes de Tim"];
     }
     public static function memberDataGenerator() {
-        // MembreTux : role,pseudo,classeurname
-        yield ["wifi","xhelozs","Les cartes de Tim"];
-        yield ["vieux","placeholder","goat"];
-        yield ["vieux","xanode","fedoraaa"];
-        yield ["prez","nishogi","nicowano"];
-        yield ["com","jouliet",null];
+        // MembreTux : usermail,pseudo,classeurname
+        yield ["xhelozs@localhost","xhelozs","Les cartes de Tim"];
+        yield ["placeholder@localhost","placeholder","goat"];
+        yield ["xanode@localhost","xanode","fedoraaa"];
+        yield ["nishogi@localhost","nishogi","nicowano"];
+        yield ["jouliet@localhost","jouliet","zezezeroooo"];
     }
     public static function vitrineDataGenerator() {
         // VitrineTux : name,[cartetypes],membrename,ispublic
@@ -71,12 +80,17 @@ class AppFixtures extends Fixture
             $manager->persist($carte);
         }
 
-        foreach (self::memberDataGenerator() as [$role,$pseudo,$classeurname]) {
+        foreach (self::memberDataGenerator() as [$usermail,$pseudo,$classeurname]) {
         // Génération des membres
             $membre = new MembreTux();
-            $membre->setRole($role);
             $membre->setPseudo($pseudo);
-        // Association d'un classeur au membre (OneToOne)
+        // Lien MembreTux<->User
+            if ($usermail) {
+                $user = $manager->getRepository(User::class)->findOneByEmail($usermail);
+                $membre->setUser($user);
+            }
+        
+        // Association d'un classeur au membre (ManyToOne)
             if ($classeurname != null) {
                 $classeur = $this->getReference($classeurname);
                 $classeurs = new ArrayCollection();

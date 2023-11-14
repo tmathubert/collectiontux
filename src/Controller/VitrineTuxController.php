@@ -13,10 +13,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/vitrine')]
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
 class VitrineTuxController extends AbstractController
 {
+    #[IsGranted('ROLE_USER')]
     #[Route('/', name: 'app_vitrine_tux_index', methods: ['GET'])]
     public function index(VitrineTuxRepository $vitrineTuxRepository): Response
     {
@@ -25,6 +28,7 @@ class VitrineTuxController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route('/new/{id}', name: 'app_vitrine_tux_new', methods: ['GET', 'POST'])]
     public function new(Request $request, VitrineTuxRepository $vitrineRepository, EntityManagerInterface $entityManager, MembreTux $membre): Response
     {
@@ -47,6 +51,7 @@ class VitrineTuxController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[IsGranted('ROLE_USER')]
     #[Route('/{id}', name: 'app_vitrine_tux_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function showAction(VitrineTux $vitrine): Response
     {
@@ -54,7 +59,7 @@ class VitrineTuxController extends AbstractController
             'vitrine' => $vitrine,
         ]);
     }
-
+    #[IsGranted('ROLE_USER')]
     #[Route('/{vitrine_id}/carte/{carte_id}', methods: ['GET'], name: 'app_vitrine_carte_show')]
     public function carteShow(
         #[MapEntity(id: 'vitrine_id')]
@@ -64,19 +69,19 @@ class VitrineTuxController extends AbstractController
     ): Response
     {   
         if(! $vitrine->getCartesTux()->contains($carte)) {
-            throw $this->createNotFoundException("Couldn't find such a carte in this vitrine!");
+            throw $this->createNotFoundException("Carte introuvable dans cette vitrine.");
     }
 
         if(! $vitrine->isIspublic()) {
-            throw $this->createAccessDeniedException("You cannot access the requested ressource!");
+            throw $this->createAccessDeniedException("Cette vitrine n'est pas publiée.");
     }
 
         return $this->render('vitrine_tux/carte_show.html.twig', [
-            'carte' => $carte,
-            'vitrine' => $vitrine
+            'carte_tux' => $carte,
+            'vitrine_tux' => $vitrine
         ]);
     }
- 
+    #[IsGranted('ROLE_USER')]
     #[Route('/{id}/edit', name: 'app_vitrine_tux_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, VitrineTux $vitrineTux, EntityManagerInterface $entityManager): Response
     {
@@ -94,7 +99,7 @@ class VitrineTuxController extends AbstractController
             'form' => $form,
         ]);
     }
-
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/{id}', name: 'app_vitrine_tux_delete', methods: ['POST'])]
     public function delete(Request $request, VitrineTux $vitrineTux, EntityManagerInterface $entityManager): Response
     {

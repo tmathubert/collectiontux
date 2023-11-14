@@ -7,7 +7,7 @@
 
     {{ include('classeur_tux/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_classeur_tux_index') }}">back to list</a>
+    <a href="{{ path('app_classeur_tux_show',{'id':classeur_tux.id}) }}">back to list</a>
 
     {{ include('classeur_tux/_delete_form.html.twig') }}
 {% endblock %}

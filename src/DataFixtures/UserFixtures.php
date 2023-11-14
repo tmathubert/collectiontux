@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\MembreTux;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -28,7 +29,7 @@ class UserFixtures extends Fixture
             $password = $this->hasher->hashPassword($user, $plainPassword);
             $user->setEmail($email);
             $user->setPassword($password);
-
+            $user->setPseudo("username");
             $roles = array();
             $roles[] = $role;
             $user->setRoles($roles);
@@ -40,14 +41,29 @@ class UserFixtures extends Fixture
         private function getUserData()
         {
                 yield [
-                        'chris@localhost',
-                        'chris',
-                        'ROLE_USER'
+                    'xhelozs@localhost',
+                    'xhelozs',
+                    'ROLE_ADMIN'
                 ];
                 yield [
-                        'anna@localhost',
-                        'anna',
-                        'ROLE_ADMIN'
+                    'placeholder@localhost',
+                    'placeholder',
+                    'ROLE_USER'
+                ];
+                yield [
+                    'nishogi@localhost',
+                    'nishogi',
+                    'ROLE_ADMIN'
+                ];
+                yield [
+                    'jouliet@localhost',
+                    'jouliet',
+                    'ROLE_USER'
+                ];
+                yield [
+                    'xanode@localhost',
+                    'xanode',
+                    'ROLE_ADMIN'
                 ];
         }
 }

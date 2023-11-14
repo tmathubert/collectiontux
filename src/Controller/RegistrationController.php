@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\MembreTux;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,7 +30,9 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-
+            $membre = new MembreTux();
+            $membre->setPseudo($user->getPseudo());
+            $user->setMembreTux($membre);
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email

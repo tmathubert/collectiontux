@@ -3,25 +3,25 @@
 {% block title %}VitrineTux{% endblock %}
 
 {% block main %}
-    <h1>VitrineTux {{vitrine.name}} </h1>
+    <h1>VitrineTux {{vitrine_tux.name}} </h1>
 
-    <h1>Carte {{ carte.description }}</h1>
+    <h1>Carte {{ carte_tux.description }}</h1>
     <table class="table">
         <tbody>
             <tr>
                 <th>ID :</th>
-                <td>{{ carte.id }}</td>
+                <td>{{ carte_tux.id }}</td>
               </tr>
             <tr>
                 <th>Type :</th>
-                <td>{{ carte.type }}</td>
+                <td>{{ carte_tux.type }}</td>
             </tr>
             <tr>
                 <th>Prix :</th>
-                <td>{{ carte.prix }}</td>
+                <td>{{ carte_tux.prix }}</td>
             </tr>
             <tr>
-                <a href="{{ path('app_vitrine_tux_show', { 'id': vitrine.id}) }}">back to VitrineTux</a>
+                <a href="{{ path('app_vitrine_tux_show', { 'id': vitrine_tux.id}) }}">back to VitrineTux</a>
             </tr>
         </tbody>
     </table>

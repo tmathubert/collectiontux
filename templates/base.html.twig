@@ -17,13 +17,13 @@
         <script src="{{ asset('js/scripts.js') }}"></script>
         {% endblock %}
     </head>
-    <body class="bg-success d-flex flex-column min-vh-100">
+    <body class="bg-light d-flex flex-column min-vh-100">
          
         {% block menu %}
             <!-- Navigation -->
             <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
                 <div class="container-fluid">
-                  <a class="navbar-brand" href="#">
+                  <a class="navbar-brand" href="/">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/TUX_G2.svg/1200px-TUX_G2.svg.png" alt="Tux" width="42" height="50">
                   </a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse"
@@ -35,9 +35,13 @@
                         {{ render_bootstrap_menu('main') }}
                         {% if app.user %}
                             {{ render_bootstrap_menu('account') }}
+                            {% if 'ROLE_ADMIN' in app.user.roles %}
+                                {{ render_bootstrap_menu('admin') }}
+                            {% endif %}
                         {% else %}
                             {{ render_bootstrap_menu('anonymousaccount') }}
                         {% endif %} {# app.user #}
+                        
                     </ul>
                   </div>
                 </div>
@@ -78,7 +82,7 @@
                 {% block footer %}
                 <footer class="text-center text-lg-start bg-black text-muted mt-auto">
                     <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-                        Application Collection Tux - Timothée Mathubert - Projet CSC4101 2023
+                        Application Collection Tux - Timothée Mathubert - Projet CSC4101
                     </div>
                 </footer>
                 {% endblock %} {# footer #}

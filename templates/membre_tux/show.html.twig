@@ -1,34 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}MembreTux{% endblock %}
+
+{% block title %}Mon Compte{% endblock %}
 
 {% block main %}
-    <h1>MembreTux</h1>
+    <h1>Mon Compte</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ membre_tux.id }}</td>
-            </tr>
-            <tr>
-                <th>Role</th>
-                <td>{{ membre_tux.role }}</td>
-            </tr>
-            <tr>
-                <th>Pseudo</th>
+                <th>Mon Pseudo</th>
                 <td>{{ membre_tux.pseudo }}</td>
             </tr>
             <tr>
-                <th>Classeurs</th>
+                <th>Mes Classeurs</th>
                 {% for classeur in membre_tux.classeurstux %}
                     <td><a href="{{ path('app_classeur_tux_show', {'id' : classeur.id}) }}">{{ classeur }}</a></td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th>Mes Vitrines</th>
+                {% for vitrine in membre_tux.vitrinestux %}
+                    <td><a href="{{ path('app_vitrine_tux_show', {'id' : vitrine.id}) }}">{{ vitrine.name }}</a></td>
                 {% endfor %}
             </tr>
 
         </tbody>
     </table>
-    <a href="{{ path('app_classeur_tux_new', {'id': membre_tux.id}) }}">add new ClasseurTux</a><br>
-    <a href="{{ path('app_vitrine_tux_new', {'id': membre_tux.id}) }}">add new VitrineTux</a><br>
-    <a href="{{ path('app_membre_tux_index') }}">back to list</a>
+    <a href="{{ path('app_classeur_tux_new', {'id': membre_tux.id}) }}" class="btn btn-success">Nouveau classeur</a>
+    <a href="{{ path('app_vitrine_tux_new', {'id': membre_tux.id}) }}" class="btn btn-success">Nouvelle vitrine</a><br>
+    {% if 'ROLE_ADMIN' in app.user.roles %}
+    <a href="{{ path('app_membre_tux_index') }}" class="btn btn-primary mt-3">Liste des Membres</a>
+    {% endif %}
+
 {% endblock %}

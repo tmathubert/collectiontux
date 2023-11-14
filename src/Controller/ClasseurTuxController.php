@@ -12,12 +12,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/classeur')]
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
 class ClasseurTuxController extends AbstractController
 {
     // Affichage de la liste des classeurs (avec url attaché pour les consulter)
-    #[Route('/', name: 'app_classeur_tux_index', methods: ['GET'])]
+    #[Route('/admin', name: 'app_classeur_tux_index', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function listAction(ManagerRegistry $doctrine)
     {
         $entityManager=$doctrine->getManager();
@@ -28,6 +31,7 @@ class ClasseurTuxController extends AbstractController
     }
     // Affichage des détails d'un classeur (nom, propriétaire, contenu)
     #[Route('/{id}', name: 'app_classeur_tux_show', requirements: ['id' => '\d+'], methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
     public function showAction(ClasseurTux $classeur): Response
     {
         return $this->render('classeur_tux/show.html.twig', [
@@ -35,6 +39,7 @@ class ClasseurTuxController extends AbstractController
         ]);
     }
     #[Route('/new/{id}', name: 'app_classeur_tux_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
     public function new(Request $request, ClasseurTuxRepository $classeurRepository, MembreTux $member,EntityManagerInterface $entityManager): Response
     {
             $classeur = new ClasseurTux();
@@ -55,6 +60,7 @@ class ClasseurTuxController extends AbstractController
         ]);
     }
     #[Route('/{id}/edit', name: 'app_classeur_tux_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
     public function edit(Request $request, ClasseurTux $classeurTux, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ClasseurTuxType::class, $classeurTux);
@@ -73,6 +79,7 @@ class ClasseurTuxController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_classeur_tux_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, ClasseurTux $classeurTux, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$classeurTux->getId(), $request->request->get('_token'))) {

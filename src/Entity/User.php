@@ -29,6 +29,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?MembreTux $membreTux = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $pseudo = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -97,5 +104,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getMembreTux(): ?MembreTux
+    {
+        return $this->membreTux;
+    }
+
+    public function setMembreTux(MembreTux $membreTux): static
+    {
+        $this->membreTux = $membreTux;
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): static
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
     }
 }
