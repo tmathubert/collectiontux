@@ -1,28 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}VitrineTux index{% endblock %}
+{% block title %}Collection Tux{% endblock %}
 
 {% block main %}
-    <h1>VitrineTux index</h1>
-
+    <div class=text-center><h1>Vitrines Tux</h1></div>
+    <div class=text-center><a href="{{ path('app_vitrine_tux_new', {'id': user.membreTux.id}) }}" class="btn btn-success">Nouvelle vitrine</a></div>
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Ispublic</th>
-                <th>Name</th>
-                <th>actions</th>
+                <th>Nom</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for vitrine_tux in vitrine_tuxes %}
             <tr>
-                <td>{{ vitrine_tux.id }}</td>
-                <td>{{ vitrine_tux.ispublic ? 'Yes' : 'No' }}</td>
                 <td>{{ vitrine_tux.name }}</td>
                 <td>
-                    <a href="{{ path('app_vitrine_tux_show', {'id': vitrine_tux.id}) }}">show</a>
-                    <a href="{{ path('app_vitrine_tux_edit', {'id': vitrine_tux.id}) }}">edit</a>
+                    <a href="{{ path('app_vitrine_tux_show', {'id': vitrine_tux.id}) }}" class="btn btn-primary">Afficher</a>
+                    {% if vitrine_tux.membreTux.User == user %}
+                        <a href="{{ path('app_vitrine_tux_edit', {'id': vitrine_tux.id}) }}" class="btn btn-danger">Éditer</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -32,4 +30,57 @@
         {% endfor %}
         </tbody>
     </table>
+    {% if 'ROLE_ADMIN' in app.user.roles %}
+    <div class=text-center><h1>Toutes les vitrines</h1></div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Publiée</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for vitrine_tux in priv_vitrines_tux %}
+            <tr>
+                <td>{{ vitrine_tux.name }}</td>
+                <td>{{ vitrine_tux.ispublic }}</td>
+                <td>
+                    <a href="{{ path('app_vitrine_tux_show', {'id': vitrine_tux.id}) }}" class="btn btn-primary">Afficher</a>
+                    <a href="{{ path('app_vitrine_tux_edit', {'id': vitrine_tux.id}) }}" class="btn btn-danger">Éditer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class=text-center><h1>Mes Vitrines Privées</h1></div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for vitrine_tux in priv_vitrines_tux %}
+            <tr>
+                <td>{{ vitrine_tux.name }}</td>
+                <td>
+                    <a href="{{ path('app_vitrine_tux_show', {'id': vitrine_tux.id}) }}" class="btn btn-primary">Afficher</a>
+                    <a href="{{ path('app_vitrine_tux_edit', {'id': vitrine_tux.id}) }}" class="btn btn-danger">Éditer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Vous n'avez pas de vitrine privée.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
 {% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\CarteTux;
+use App\Entity\MembreTux;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -20,6 +21,20 @@ class CarteTuxRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, CarteTux::class);
     }
+    /**
+     * @return [Objet][] Returns an array of [Objet] objects for a member
+     */
+    public function findMemberCartesTux(MembreTux $member): array
+    {
+            return $this->createQueryBuilder('o')
+                    ->leftJoin('o.classeurTux', 'i')
+                    ->andWhere('i.membreTux = :member')
+                    ->setParameter('member', $member)
+                    ->getQuery()
+                    ->getResult()
+            ;
+    }
+ 
 
 //    /**
 //     * @return CarteTux[] Returns an array of CarteTux objects

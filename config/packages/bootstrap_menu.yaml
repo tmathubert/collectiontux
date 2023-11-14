@@ -5,6 +5,12 @@ bootstrap_menu:
         vitrines:
           label: 'Vitrines'
           route: 'app_vitrine_tux_index'
+        classeurs:
+          label: 'Mes Classeurs'
+          route: 'app_classeur_tux_index'
+        cartes:
+          label: 'Mes Cartes'
+          route: 'app_carte_tux_index'
     anonymousaccount:
       items:
         login:
@@ -39,3 +45,6 @@ bootstrap_menu:
             classeur:
               label: 'Classeurs'
               route: 'app_classeur_tux_index'
+            vitrines:
+              label: 'Vitrines'
+              route: 'app_vitrine_tux_index'

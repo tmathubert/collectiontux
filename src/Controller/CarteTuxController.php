@@ -7,7 +7,6 @@ use App\Entity\ClasseurTux;
 use App\Form\CarteTuxType;
 use App\Repository\CarteTuxRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,10 +17,21 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class CarteTuxController extends AbstractController
 {
     #[Route('/',name: 'app_carte_tux_index',methods: ['GET'])]
-    public function index(): Response
+    public function index(CarteTuxRepository $carteRepository): Response
     {
-        return $this->redirectToRoute('app_classeur_tux_index');
+        $cartesTux=$carteRepository->findAll();
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $cartesTux = $carteRepository->findAll();
+        }
+        else {
+            $membre = $this->getUser()->getMembreTux();
+            $cartesTux = $carteRepository->findMemberCartesTux($membre);
+        }
+        return $this->render('carte_tux/index.html.twig',[
+            'cartestux'=>$cartesTux,
+            ]);
     }
+    
     #[Route('/{id}',name: 'app_carte_tux_show',methods: ['GET'])]
     public function showAction(CarteTux $carte): Response
     {

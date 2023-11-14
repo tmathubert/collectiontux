@@ -21,10 +21,6 @@ class VitrineTuxRepository extends ServiceEntityRepository
         parent::__construct($registry, VitrineTux::class);
     }
     
-    public function findAll(): array
-    {
-        return $this->findBy(['ispublic'=>true]);
-    }
 
 //    /**
 //     * @return VitrineTux[] Returns an array of VitrineTux objects

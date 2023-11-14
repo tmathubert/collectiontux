@@ -3,13 +3,13 @@
 {% block title %}VitrineTux{% endblock %}
 
 {% block main %}
-    <h1>VitrineTux</h1>
+    <h1>Vitrine {{ vitrine_tux.name }}</h1>
 
-    <h2>[Objets]</h2>
+    <h2>Cartes Tux</h2>
         <ul>
-            {% for carte in vitrine.cartestux %}
+            {% for carte in vitrine_tux.cartestux %}
             <li>
-                <a href="{{ path('app_vitrine_carte_show', {'vitrine_id': vitrine.id, 'carte_id' : carte.id}) }}">{{ carte }}</a>
+                <a href="{{ path('app_vitrine_carte_show', {'vitrine_id': vitrine_tux.id, 'carte_id' : carte.id}) }}">{{ carte }}</a>
             </li>
             {% endfor %}
         </ul>
@@ -17,7 +17,7 @@
 
     <a href="{{ path('app_vitrine_tux_index') }}">back to list</a>
 
-    <a href="{{ path('app_vitrine_tux_edit', {'id': vitrine.id}) }}">edit</a>
+    <a href="{{ path('app_vitrine_tux_edit', {'id': vitrine_tux.id}) }}">edit</a>
 
     {{ include('vitrine_tux/_delete_form.html.twig') }}
 {% endblock %}

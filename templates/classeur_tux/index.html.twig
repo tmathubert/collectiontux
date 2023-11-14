@@ -3,9 +3,15 @@
 {% block title %}Liste des Classeurs Tux{% endblock %}
 
 {% block main %}
-        <div class="text-center">
-        <a href="/classeur/#" class ="btn btn-info text-white mx-auto w-25 mt-4 mb-5"><h4>Nouveau Classeur</h4></a> 
-        </div>
+  {% if 'ROLE_ADMIN' in app.user.roles %}
+    <div class="text-center">
+    <h1>Tous les classeurs</h1>
+    </div>
+  {% endif %}
+
+  <div class="text-center">
+    <a href="/classeur/#" class ="btn btn-info text-white mx-auto w-25 mt-4 mb-5"><h4>Nouveau Classeur</h4></a> 
+  </div>
         {% for classeur in classeurs %}
 
         <div class="card shadow p-3 mb-5 bg-body-tertiary rounded bg-light mx-auto" style="width: 25rem;">

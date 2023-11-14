@@ -19,27 +19,40 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class ClasseurTuxController extends AbstractController
 {
     // Affichage de la liste des classeurs (avec url attaché pour les consulter)
-    #[Route('/admin', name: 'app_classeur_tux_index', methods: ['GET'])]
-    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/', name: 'app_classeur_tux_index', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
     public function listAction(ManagerRegistry $doctrine)
     {
         $entityManager=$doctrine->getManager();
-        $classeurs = $entityManager->getRepository(ClasseurTux::class)->findAll();
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $myclasseurs=$entityManager->getRepository(ClasseurTux::class)->findAll();
+        }
+        else {$user = $this->getUser();
+            if($user) {
+                    $membre = $user->getMembreTux();
+            $myclasseurs = $entityManager->getRepository(ClasseurTux::class)->findBy(
+                    [
+                          'membreTux' => $membre
+                    ]);
+        }}
         return $this->render('classeur_tux/index.html.twig', [
-            'classeurs' => $classeurs,
+            'classeurs' => $myclasseurs,
         ]);
     }
     // Affichage des détails d'un classeur (nom, propriétaire, contenu)
     #[Route('/{id}', name: 'app_classeur_tux_show', requirements: ['id' => '\d+'], methods: ['GET'])]
-    #[IsGranted('ROLE_USER')]
-    public function showAction(ClasseurTux $classeur): Response
+    public function showAction(ClasseurTux $classeurTux): Response
     {
+        $hasAccess = $this->isGranted('ROLE_ADMIN') ||
+            ($this->getUser()==$classeurTux->getMembretux()->getUser());
+        if(! $hasAccess) {
+            throw $this->createAccessDeniedException("Vous ne pouvez pas accéder à un classeur qui n'est pas le vôtre.");
+        }
         return $this->render('classeur_tux/show.html.twig', [
-            'classeur' => $classeur,
+            'classeur' => $classeurTux,
         ]);
     }
     #[Route('/new/{id}', name: 'app_classeur_tux_new', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_USER')]
     public function new(Request $request, ClasseurTuxRepository $classeurRepository, MembreTux $member,EntityManagerInterface $entityManager): Response
     {
             $classeur = new ClasseurTux();
@@ -60,9 +73,13 @@ class ClasseurTuxController extends AbstractController
         ]);
     }
     #[Route('/{id}/edit', name: 'app_classeur_tux_edit', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_USER')]
     public function edit(Request $request, ClasseurTux $classeurTux, EntityManagerInterface $entityManager): Response
-    {
+    {   
+        $hasAccess = $this->isGranted('ROLE_ADMIN') ||
+            ($this->getUser()==$classeurTux->getMembretux()->getUser());
+        if(! $hasAccess) {
+            throw $this->createAccessDeniedException("Vous ne pouvez pas accéder à un classeur qui n'est pas le vôtre.");
+        }
         $form = $this->createForm(ClasseurTuxType::class, $classeurTux);
         $form->handleRequest($request);
 
@@ -79,9 +96,13 @@ class ClasseurTuxController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_classeur_tux_delete', methods: ['POST'])]
-    #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, ClasseurTux $classeurTux, EntityManagerInterface $entityManager): Response
     {
+        $hasAccess = $this->isGranted('ROLE_ADMIN') ||
+            ($this->getUser()==$classeurTux->getMembretux()->getUser());
+        if(! $hasAccess) {
+            throw $this->createAccessDeniedException("Vous ne pouvez pas accéder à un classeur qui n'est pas le vôtre.");
+        }
         if ($this->isCsrfTokenValid('delete'.$classeurTux->getId(), $request->request->get('_token'))) {
             $entityManager->remove($classeurTux);
             $entityManager->flush();

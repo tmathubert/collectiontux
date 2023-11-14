@@ -2,19 +2,40 @@
 
 {% block title %}Hello CarteTuxController!{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block main %}
+{% if 'ROLE_ADMIN' in app.user.roles %}
+<h1>Liste des Cartes</h1>
+{% else %}
+<h1>Mes Cartes</h1>
+{% endif %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                {% if 'ROLE_ADMIN' in app.user.roles %}
+                <th>Id</th>
+                {% endif %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/tmathubert/csc4101-pro/collectiontux/src/Controller/CarteTuxController.php'|file_link(0) }}">src/Controller/CarteTuxController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/tmathubert/csc4101-pro/collectiontux/templates/carte_tux/index.html.twig'|file_link(0) }}">templates/carte_tux/index.html.twig</a></code></li>
-    </ul>
-</div>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Prix</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for carte in cartestux %}
+            <tr>
+                {% if 'ROLE_ADMIN' in app.user.roles %}
+                <td>{{ carte.id }}</td>
+                {% endif %}
+                <td>{{ carte.type }}</td>
+                <td>{{ carte.description }}</td>
+                <td>{{ carte.prix }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
