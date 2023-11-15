@@ -35,6 +35,9 @@
                         {{ render_bootstrap_menu('main') }}
                         {% if app.user %}
                             {{ render_bootstrap_menu('account') }}
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="{{path('app_membre_tux_show',{'id':app.user.membreTux.id}) }}">Mon Compte</a>
+                            </li>                              
                             {% if 'ROLE_ADMIN' in app.user.roles %}
                                 {{ render_bootstrap_menu('admin') }}
                             {% endif %}

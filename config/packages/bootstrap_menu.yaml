@@ -5,24 +5,27 @@ bootstrap_menu:
         vitrines:
           label: 'Vitrines'
           route: 'app_vitrine_tux_index'
-        classeurs:
-          label: 'Mes Classeurs'
-          route: 'app_classeur_tux_index'
-        cartes:
-          label: 'Mes Cartes'
-          route: 'app_carte_tux_index'
     anonymousaccount:
       items:
         login:
-          label: 'Login'
+          label: 'Connexion'
           route: 'app_login'
         register:
-          label: 'Register'
+          label: 'Inscription'
           route: 'app_register'
     account:
       items:
+        profil:
+          label: 'Profil'
+          items:
+            classeurs:
+              label: 'Mes Classeurs'
+              route: 'app_classeur_tux_index'
+            cartes:
+              label: 'Mes Cartes'
+              route: 'app_carte_tux_index'
         logout:
-          label: 'Logout'
+          label: 'Déconnexion'
           route: 'app_logout'
           roles: [ 'ROLE_USER' ]
     admin:

@@ -27,12 +27,17 @@ class ClasseurTuxController extends AbstractController
         if ($this->isGranted('ROLE_ADMIN')) {
             $myclasseurs=$entityManager->getRepository(ClasseurTux::class)->findAll();
         }
-        else {$user = $this->getUser();
+        else {
+            $user = $this->getUser();
             if($user) {
                     $membre = $user->getMembreTux();
             $myclasseurs = $entityManager->getRepository(ClasseurTux::class)->findBy(
                     [
                           'membreTux' => $membre
+                    ]);
+                    return $this->render('classeur_tux/index.html.twig', [
+                        'classeurs' => $myclasseurs,
+                        'membre'=>$membre
                     ]);
         }}
         return $this->render('classeur_tux/index.html.twig', [

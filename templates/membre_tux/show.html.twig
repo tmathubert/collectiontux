@@ -29,6 +29,7 @@
     </table>
     <a href="{{ path('app_classeur_tux_new', {'id': membre_tux.id}) }}" class="btn btn-success">Nouveau classeur</a>
     <a href="{{ path('app_vitrine_tux_new', {'id': membre_tux.id}) }}" class="btn btn-success">Nouvelle vitrine</a><br>
+    <a href="{{ path('app_membre_tux_edit',{'id': membre_tux.id}) }}" class="btn btn-danger mt-3">Éditer mon profil</a>
     {% if 'ROLE_ADMIN' in app.user.roles %}
     <a href="{{ path('app_membre_tux_index') }}" class="btn btn-primary mt-3">Liste des Membres</a>
     {% endif %}

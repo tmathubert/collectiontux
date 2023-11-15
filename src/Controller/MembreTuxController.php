@@ -27,8 +27,8 @@ class MembreTuxController extends AbstractController
             'membre_tuxes' => $membreTuxRepository->findAll(),
         ]);
     }
-    #[IsGranted('ROLE_ADMIN')]
-    #[Route('/edit/{id}', name: 'app_membre_tux_edit', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
+    #[Route('/edit/{id}', name: 'app_membre_tux_edit', methods: ['GET','POST'])]
     public function edit(Request $request, MembreTux $membreTux, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(MembreTuxType::class, $membreTux);
@@ -39,7 +39,11 @@ class MembreTuxController extends AbstractController
 
             return $this->redirectToRoute('app_membre_tux_show', ['id'=>$membreTux->getId()], Response::HTTP_SEE_OTHER);
         }
-
+        $hasAccess = $this->isGranted('ROLE_ADMIN') ||
+            ($this->getUser()==$membreTux->getUser());
+        if(! $hasAccess) {
+            throw $this->createAccessDeniedException("Vous ne pouvez pas accéder à un profil qui n'est pas le vôtre.");
+        }
         return $this->render('membre_tux/edit.html.twig', [
             'membre_tux' => $membreTux,
             'form' => $form,
