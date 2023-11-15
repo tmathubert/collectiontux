@@ -14,5 +14,8 @@
           <p class="card-text text-center">{{ carte.prix }} Points Tux</p>
         </div>
 
-    </div>  
+    </div>
+    <div class="text-center">
+    <a href="{{ path('app_classeur_tux_show',{'id':carte.classeurTux.id})}}" class="btn btn-primary">Retour</a>
+    </div>
 {% endblock %}
