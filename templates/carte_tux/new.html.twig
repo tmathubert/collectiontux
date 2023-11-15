@@ -3,9 +3,9 @@
 {% block title %}New CarteTux{% endblock %}
 
 {% block main %}
-    <h1>Create new CarteTux</h1>
+    <h1>Créer une Carte Tux</h1>
 
-    {{ include('classeur_tux/_form.html.twig') }}
+    {{ include('carte_tux/_form.html.twig') }}
 
-    <a href="{{ path('app_classeur_tux_show',{'id':classeur.id}) }}">back to ClasseurTux</a>
+    <a href="{{ path('app_membre_tux_show',{'id':membre_tux.id}) }}" class="btn btn-primary">Retour</a>
 {% endblock %}

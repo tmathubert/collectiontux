@@ -20,15 +20,16 @@ class CarteTuxController extends AbstractController
     public function index(CarteTuxRepository $carteRepository): Response
     {
         $cartesTux=$carteRepository->findAll();
+        $membre = $this->getUser()->getMembreTux();
         if ($this->isGranted('ROLE_ADMIN')) {
             $cartesTux = $carteRepository->findAll();
         }
         else {
-            $membre = $this->getUser()->getMembreTux();
             $cartesTux = $carteRepository->findMemberCartesTux($membre);
         }
         return $this->render('carte_tux/index.html.twig',[
             'cartestux'=>$cartesTux,
+            'membre'=>$membre
             ]);
     }
     
@@ -56,6 +57,7 @@ class CarteTuxController extends AbstractController
         return $this->render('carte_tux/new.html.twig', [
             'carte_tux' => $carte,
             'classeur' => $classeur,
+            'membre_tux'=>$classeur->getMembretux(),
             'form' => $form,
         ]);
     }

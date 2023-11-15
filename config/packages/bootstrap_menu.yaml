@@ -15,15 +15,9 @@ bootstrap_menu:
           route: 'app_register'
     account:
       items:
-        profil:
-          label: 'Profil'
-          items:
-            classeurs:
-              label: 'Mes Classeurs'
-              route: 'app_classeur_tux_index'
-            cartes:
-              label: 'Mes Cartes'
-              route: 'app_carte_tux_index'
+        classeurs:
+          label: 'Mes Classeurs'
+          route: 'app_classeur_tux_index'
         logout:
           label: 'Déconnexion'
           route: 'app_logout'

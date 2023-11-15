@@ -6,6 +6,7 @@ use App\Entity\CarteTux;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class CarteTuxType extends AbstractType
 {
@@ -13,6 +14,10 @@ class CarteTuxType extends AbstractType
     {
         $builder
             ->add('type')
+            ->add('imageFile',VichImageType::class,[
+                'label' => 'Image de la carte',
+
+            ])
             ->add('description')
             ->add('prix')
             ->add('date')

@@ -53,7 +53,7 @@ class UserFixtures extends Fixture
                 yield [
                     'nishogi@localhost',
                     'nishogi',
-                    'ROLE_ADMIN'
+                    'ROLE_USER'
                 ];
                 yield [
                     'jouliet@localhost',
@@ -63,7 +63,17 @@ class UserFixtures extends Fixture
                 yield [
                     'xanode@localhost',
                     'xanode',
-                    'ROLE_ADMIN'
+                    'ROLE_USER'
+                ];
+                yield [
+                    'fauconk@localhost',
+                    'fauconk',
+                    'ROLE_USER'
+                ];
+                yield [
+                    'izaia@localhost',
+                    'izaia',
+                    'ROLE_USER'
                 ];
         }
 }

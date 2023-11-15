@@ -3,26 +3,19 @@
 {% block title %}VitrineTux{% endblock %}
 
 {% block main %}
-    <h1>VitrineTux {{vitrine_tux.name}} </h1>
+    <div class="text-center"><h1>Vitrine "{{vitrine_tux.name}}"</h1>
+    <a href="{{ path('app_vitrine_tux_show',{'id': vitrine_tux.id}) }}", class="btn btn-primary mb-3 mx-auto">Retour</a>
+    </div>
+    <div class="card shadow p-3 mb-5 bg-body-tertiary rounded bg-light mx-auto" style="width: 25rem;">
 
-    <h1>Carte {{ carte_tux.description }}</h1>
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>ID :</th>
-                <td>{{ carte_tux.id }}</td>
-              </tr>
-            <tr>
-                <th>Type :</th>
-                <td>{{ carte_tux.type }}</td>
-            </tr>
-            <tr>
-                <th>Prix :</th>
-                <td>{{ carte_tux.prix }}</td>
-            </tr>
-            <tr>
-                <a href="{{ path('app_vitrine_tux_show', { 'id': vitrine_tux.id}) }}">back to VitrineTux</a>
-            </tr>
-        </tbody>
-    </table>
+        <img src={{ vich_uploader_asset(carte_tux,'imageFile') }} class="mx-auto img-fluid" alt="carte" />  
+
+        <div class="card-body mx-auto p-2">
+
+          <h5 class="card-title text-center">{{ carte_tux.description }}</h5>
+          <p class="card-text text-center">{{ carte_tux.type }}</p>
+          <p class="card-text text-center">{{ carte_tux.prix }} Points Tux</p>
+        </div>
+
+    </div>  
 {% endblock %}

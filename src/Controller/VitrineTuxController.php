@@ -87,8 +87,8 @@ class VitrineTuxController extends AbstractController
         if(! $hasAccess) {
                 throw $this->createAccessDeniedException("You cannot access the requested resource!");
         }
-        return $this->render('vitrine/show.html.twig', [
-                'vitrine' => $vitrine,
+        return $this->render('vitrine_tux/show.html.twig', [
+                'vitrine_tux' => $vitrine,
         ]);
     }
     #[IsGranted('ROLE_USER')]
@@ -111,8 +111,8 @@ class VitrineTuxController extends AbstractController
     else {
             $user = $this->getUser();
               if( $user ) {
-                      $member = $user->getMember();
-                      if ( $member &&  ($member == $vitrine->getMembretux()) ) {
+                      $member = $user->getMembreTux();
+                      if ( $member &&  ($member == $vitrine->getMembreTux()) ) {
                               $hasAccess = true;
                       }
               }
@@ -121,9 +121,9 @@ class VitrineTuxController extends AbstractController
             throw $this->createAccessDeniedException("You cannot access the requested ressource!");
     }
 
-    return $this->render('vitrine/carte_show.html.twig', [
-            'carte' => $carte,
-              'vitrine' => $vitrine
+    return $this->render('vitrine_tux/carte_show.html.twig', [
+            'carte_tux' => $carte,
+            'vitrine_tux' => $vitrine
       ]);
 
     }

@@ -3,21 +3,19 @@
 {% block title %}VitrineTux{% endblock %}
 
 {% block main %}
-    <h1>Vitrine {{ vitrine_tux.name }}</h1>
-
-    <h2>Cartes Tux</h2>
+<div class="text-center">
+    <h1 class="mb-3">Vitrine "{{ vitrine_tux.name }}"</h1>
         <ul>
             {% for carte in vitrine_tux.cartestux %}
-            <li>
-                <a href="{{ path('app_vitrine_carte_show', {'vitrine_id': vitrine_tux.id, 'carte_id' : carte.id}) }}">{{ carte }}</a>
-            </li>
+                <a href="{{ path('app_vitrine_carte_show', {'carte_id': carte.id, 'vitrine_id': vitrine_tux.id}) }}" class="btn btn-success">
+                    <img src={{vich_uploader_asset(carte,'imageFile')}} class="img-fluid" alt="carte" />
+                    <br>
+                    <p class="text-center"><h5>{{ carte }}</h5></p>
+                </a>
             {% endfor %}
         </ul>
 
 
-    <a href="{{ path('app_vitrine_tux_index') }}">back to list</a>
-
-    <a href="{{ path('app_vitrine_tux_edit', {'id': vitrine_tux.id}) }}">edit</a>
-
-    {{ include('vitrine_tux/_delete_form.html.twig') }}
+    <a href="{{ path('app_vitrine_tux_index') }}", class="btn btn-primary">Retour aux Vitrines</a>
+</div>
 {% endblock %}

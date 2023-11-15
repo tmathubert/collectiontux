@@ -3,11 +3,14 @@
 {% block title %}Edit ClasseurTux{% endblock %}
 
 {% block main %}
-    <h1>Edit ClasseurTux</h1>
+<div class="text-center">
+    <h1 class="mb-3">Éditer le classeur "{{ classeur_tux.name }}"</h1>
 
     {{ include('classeur_tux/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_classeur_tux_show',{'id':classeur_tux.id}) }}">back to list</a>
-
     {{ include('classeur_tux/_delete_form.html.twig') }}
+
+    <a href="{{ path('app_classeur_tux_show',{'id':classeur_tux.id}) }}" class="btn btn-primary">Retour aux classeurs</a>
+
+</div>
 {% endblock %}

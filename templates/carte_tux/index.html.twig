@@ -1,41 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Hello CarteTuxController!{% endblock %}
-
 {% block main %}
-{% if 'ROLE_ADMIN' in app.user.roles %}
-<h1>Liste des Cartes</h1>
-{% else %}
-<h1>Mes Cartes</h1>
-{% endif %}
-
-    <table class="table">
-        <thead>
-            <tr>
-                {% if 'ROLE_ADMIN' in app.user.roles %}
-                <th>Id</th>
-                {% endif %}
-
-                <th>Type</th>
-                <th>Description</th>
-                <th>Prix</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for carte in cartestux %}
-            <tr>
-                {% if 'ROLE_ADMIN' in app.user.roles %}
-                <td>{{ carte.id }}</td>
-                {% endif %}
-                <td>{{ carte.type }}</td>
-                <td>{{ carte.description }}</td>
-                <td>{{ carte.prix }}</td>
-            </tr>
+    <div class="text-center">
+        {% if 'ROLE_ADMIN' in app.user.roles %}
+            <h1>Liste des Cartes</h1>
         {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <h1 class="mb-3">Mes Cartes</h1>
+        {% endif %}
+            {% for carte in cartestux %}
+                <a href="{{ path('app_carte_tux_show',{'id': carte.id}) }}" class="btn bg-success text-light">
+                        <img src={{ vich_uploader_asset(carte,'imageFile') }} class="mx-auto p-2 img-fluid" alt="carte" />  
+                        <div class="card-body mx-auto p-2">
+                            <h5 class="card-title text-center">{{ carte.description }}</h5>        
+                        </div>
+                </a>
+            {% endfor %}
+    </div>
+
 {% endblock %}

@@ -1,21 +1,17 @@
  - Lancement du projet, installation Symfony, démarrage interface web : DONE
     - Installation Symfony : DONE
     - Interface web : DONE
- - Back : DOING
-    - Modèle de données, liaisons entre les classes : DOING
+ - Back : DONE
+    - Modèle de données, liaisons entre les classes : DONE
         - BDD : DONE
         - Premier jet : DONE
-            - MembreTux 1-----1 ClasseurTux : DONE
+            - MembreTux 1-----* ClasseurTux : DONE
             - ClasseurTux 1-----* CarteTux : DONE
             - VitrineTux *-----* CarteTux : DONE
             - MembreTux 1-----* VitrineTux : DONE
-        - Deuxième jet : DOING
-            - ClasseurTux *-----* CarteTux : TODO
-            - MembreTux 1-----1 ClasseurTux : DONE
-            - VitrineTux *-----* CarteTux : DONE
-            - MembreTux 1-----* VitrineTux : DONE
 
-    - AppFixtures : DONE (aussi DOING pour les classes qui arrivent !)
+    - AppFixtures : DONE
+    - UserFixtures : DONE
 
     - CrudController pour chaque classe (récupère toutes les données) et Dashboard : DONE
         - Dashboard : DONE
@@ -24,10 +20,24 @@
         - MembreTux : DONE
         - VitrineTux : DONE
 
- - Front : DOING
+ - Front : DONE
     - Liste classeurs : DONE
     - Liste cartes : DONE
-    - Liste membres : DOING
-    - Liste vitrines : TODO
-    - PASSER SOUS TWIG : TODO
-    - Cadriciel CSS : TODO
+    - Liste membres : DONE
+    - Liste vitrines : DONE
+    - PASSER SOUS TWIG : DONE
+    - Cadriciel CSS : DONE
+    - Opération CRUD pour chaque classe : DONE
+    - Ajout de photos pour les CarteTux (VichUploaderBundle): DONE
+
+ - Gestion de comptes : DONE
+    - Création User : DONE
+    - User 1-----1 MembreTux : DONE
+    - Connexion : DONE
+    - Inscription : DONE
+
+ - Sécurité : DONE
+    - Gestion d'accès aux listes pour admin seulement : DONE
+    - Gestion d'accès opérations CRUD en fonction du membre : DONE
+
+    DONE !

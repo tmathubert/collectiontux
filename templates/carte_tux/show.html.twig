@@ -3,26 +3,16 @@
 {% block title %}Carte {{ carte.description }}{% endblock %}
 
 {% block main %}
-    <h1>Carte {{ carte.description }}</h1>
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>ID :</th>
-                <td>{{ carte.id }}</td>
-              </tr>
-            <tr>
-                <th>Type :</th>
-                <td>{{ carte.type }}</td>
-            </tr>
-            <tr>
-                <th>Prix :</th>
-                <td>{{ carte.prix }}</td>
-            </tr>
-            <tr>
-                <a href="{{ path('app_classeur_tux_show', {'id': carte.classeurtux.id}) }}">Retour au classeur {{ carte.classeurtux.name }}</a>
-            </tr>
-        </tbody>
-    </table>
+    <div class="card shadow p-3 mb-5 bg-success rounded text-light mx-auto" style="width: 25rem;">
+        <h1 class="text-center">{{ carte.description }}</h1>
 
+        <img src={{ vich_uploader_asset(carte,'imageFile') }} class="mx-auto img-fluid" alt="carte" />  
 
+        <div class="card-body mx-auto p-2">
+
+          <p class="card-text text-center">{{ carte.type }}</p>
+          <p class="card-text text-center">{{ carte.prix }} Points Tux</p>
+        </div>
+
+    </div>  
 {% endblock %}

@@ -45,7 +45,7 @@ class ClasseurTuxController extends AbstractController
         ]);
     }
     // Affichage des détails d'un classeur (nom, propriétaire, contenu)
-    #[Route('/{id}', name: 'app_classeur_tux_show', requirements: ['id' => '\d+'], methods: ['GET'])]
+    #[Route('/{id}', name: 'app_classeur_tux_show', requirements: ['id' => '\d+'], methods: ['GET','POST'])]
     public function showAction(ClasseurTux $classeurTux): Response
     {
         $hasAccess = $this->isGranted('ROLE_ADMIN') ||

@@ -4,34 +4,50 @@
 {% block title %}Mon Compte{% endblock %}
 
 {% block main %}
-    <h1>Mon Compte</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Mon Pseudo</th>
-                <td>{{ membre_tux.pseudo }}</td>
-            </tr>
-            <tr>
-                <th>Mes Classeurs</th>
+    <div class="text-center"><h1>Bonjour {{ membre_tux.pseudo }} !</h1>
+        <a href="{{ path('app_membre_tux_edit',{'id': membre_tux.id}) }}" class="btn btn-danger mt-3 mb-3">Éditer mon profil</a>
+        {% if 'ROLE_ADMIN' in app.user.roles %}
+        <a href="{{ path('app_membre_tux_index') }}" class="btn btn-primary mb-3">Liste des Membres</a>
+        {% endif %}
+    
+                <h2>Mes Classeurs</h2>
                 {% for classeur in membre_tux.classeurstux %}
-                    <td><a href="{{ path('app_classeur_tux_show', {'id' : classeur.id}) }}">{{ classeur }}</a></td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th>Mes Vitrines</th>
-                {% for vitrine in membre_tux.vitrinestux %}
-                    <td><a href="{{ path('app_vitrine_tux_show', {'id' : vitrine.id}) }}">{{ vitrine.name }}</a></td>
-                {% endfor %}
-            </tr>
+                    <div class="card shadow p-3 bg-body-tertiary rounded bg-light mb-3 mx-auto" style="width: 15rem;">
 
-        </tbody>
-    </table>
-    <a href="{{ path('app_classeur_tux_new', {'id': membre_tux.id}) }}" class="btn btn-success">Nouveau classeur</a>
-    <a href="{{ path('app_vitrine_tux_new', {'id': membre_tux.id}) }}" class="btn btn-success">Nouvelle vitrine</a><br>
-    <a href="{{ path('app_membre_tux_edit',{'id': membre_tux.id}) }}" class="btn btn-danger mt-3">Éditer mon profil</a>
-    {% if 'ROLE_ADMIN' in app.user.roles %}
-    <a href="{{ path('app_membre_tux_index') }}" class="btn btn-primary mt-3">Liste des Membres</a>
-    {% endif %}
+                        <img src='https://images.emojiterra.com/google/noto-emoji/unicode-15/color/512px/1f4da.png' class="mx-auto p-2" alt="classeur" width="100" height="100">
+            
+                        <div class="card-body">
+            
+                        <h5 class="card-title">{{ classeur.name }}</h5>           
+                        <div class="container">
+                            <a href="{{ path('app_classeur_tux_show',{'id':classeur.id}) }}" class="btn btn-primary">Détails</a>
+                            <a href="{{ path('app_classeur_tux_edit',{'id':classeur.id}) }}" class="btn btn-danger">Éditer</a>  
+                        </div>            
+            
+                        </div>
+            
+                    </div>
+                {% endfor %}
+                <h2>Mes Vitrines</h2>
+                {% for vitrine in membre_tux.vitrinestux %}
+                        <div class="card shadow p-3 bg-body-tertiary rounded bg-light mb-3 mx-auto" style="width: 15rem;">
+
+                            <img src='https://cdn-icons-png.flaticon.com/512/4951/4951078.png' class="mx-auto p-2" alt="classeur" width="100" height="100">
+                
+                            <div class="card-body mx-auto p-2">
+                
+                            <h5 class="card-title text-center">{{ vitrine.name }}</h5>                
+                            <div class="container mx-auto p-2">
+                                <a href="{{ path('app_vitrine_tux_show',{'id':vitrine.id}) }}" class="btn btn-primary">Détails</a>
+                                <a href="{{ path('app_vitrine_tux_edit',{'id':vitrine.id}) }}" class="btn btn-danger">Éditer</a>  
+                            </div>            
+                
+                            </div>
+                
+                        </div>
+                {% else %}
+                <h3>Vous n'avez aucune vitrine.</h3>
+                {% endfor %}
+    </div>
 
 {% endblock %}
