@@ -4,7 +4,9 @@
 
 {% block main %}
 
-   
+    <div class="text-center mt-3 mb-3">
+    <a href="{{ path('app_vitrine_tux_new', {'id': app.user.membreTux.id}) }}" class="btn btn-success"><h2>Nouvelle Vitrine</h2></a>
+    </div>
     {% if 'ROLE_ADMIN' in app.user.roles %}
     <div class="text-center mb-3"><h1>Toutes les vitrines</h1></div>
         {% for vitrine in priv_vitrines_tux %}

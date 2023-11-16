@@ -32,6 +32,8 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
         yield ['fedoraaa'];
         yield ['goat'];
         yield ['zezezeroooo'];
+        yield ['izaiaclass'];
+        yield ['maverick'];
     }
     private static function cartesGenerator() {
         // CarteTux : type,desc,prix,classeurname
@@ -47,6 +49,8 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
         yield ["xanode@localhost","xanode","fedoraaa"];
         yield ["nishogi@localhost","nishogi","nicowano"];
         yield ["jouliet@localhost","jouliet","zezezeroooo"];
+        yield ["izaia@localhost","izaia","izaiaclass"];
+        yield ["fauconk@localhost","fauconk","maverick"];
     }
     public static function vitrineDataGenerator() {
         // VitrineTux : name,[cartetypes],membrename,ispublic
