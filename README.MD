@@ -38,7 +38,7 @@ Normalement, on peut acheter des cartes TUX avec des points TUX : comme l'applic
 
 ### User
 
-### Les comptes créés : [ EMAIL / MDP (ROLE)]
+### Les comptes créés : [EMAIL / MDP / ROLE]
  - xhelozs@localhost / xhelozs / ROLE_ADMIN
  - placeholder@localhost / placeholder / ROLE_USER
  - nishogi@localhost / nishogi / ROLE_USER
